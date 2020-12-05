@@ -8,7 +8,7 @@ pipeline {
       }
       stage("Run Docker image"){
         steps{
-          sh "docker run --name nginx -itd -p 8082:80 docker:latest"   
+          sh "docker run --name nginx -itd -p 9000:80 docker:latest"   
         }  
       }  
       stage("Pushing to docker hub"){
