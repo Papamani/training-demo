@@ -13,7 +13,7 @@ pipeline {
       }  
       stage("Pushing to docker hub"){
         steps{
-          withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'userId')]) {
+          withCredentials([usernamePassword(credentialsId: 'mani', passwordVariable: 'pass', usernameVariable: 'userId')]) {
             sh 'docker login -u ${userId} -p ${pass}'
             sh "docker commit nginx ma12/docker:latest"
             sh "docker push ma12/docker:latest"   
