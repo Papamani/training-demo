@@ -19,6 +19,8 @@ pipeline {
       }
       stage("Pushing to docker hub"){
         steps{
+           script {
+            last_started = env.STAGE_NAME
           withCredentials([usernamePassword(credentialsId: 'mani', passwordVariable: 'pass', usernameVariable: 'userId')]) {
             sh 'docker login -u ${userId} -p ${pass}'
             sh "docker commit nginx ma12/docker:latest"
