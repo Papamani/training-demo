@@ -3,14 +3,20 @@ pipeline {
     stages{
       stage("Docker Build"){
         steps{
+          script {
+            last_started = env.STAGE_NAME
           sh "docker build -t docker ."   
         }  
       }
+      }
       stage("Run Docker image"){
         steps{
+          script {
+            last_started = env.STAGE_NAME
           sh "docker run --name nginx -itd -p 9000:80 docker:latest"   
         }  
-      }  
+      } 
+      }
       stage("Pushing to docker hub"){
         steps{
           withCredentials([usernamePassword(credentialsId: 'mani', passwordVariable: 'pass', usernameVariable: 'userId')]) {
@@ -22,3 +28,15 @@ pipeline {
       }
    }
 }
+post {
+    success {
+      echo 'Successfully completed '    
+    }
+    failure {
+       //echo "Error caught${env.err}"
+       echo "Build failed at $last_started"
+    }  
+    }
+}
+
+
